@@ -1,0 +1,24 @@
+<html> 
+<head> 
+<script> 
+  
+// Function called every time the broswer_action button is pressed
+function sendServiceRequest(selected) {
+    selected = selected.trim();
+    var text = selected.replace(/\s+/g,"_");
+	chrome.tabs.create({'url': chrome.extension.getURL('reader.html?text1=' + escape(text))}, function(tab) {
+  	// Tab opened.
+	});
+}
+  
+// Set the background page to listen for click events on the brower_action 
+// button. Listener then calls updateIcon() whenever triggered.
+chrome.browserAction.onClicked.addListener(function(tab) {
+  chrome.tabs.sendRequest(tab.id, {method: "getSelection"}, function(response){
+     sendServiceRequest(response.data);
+  });
+});
+
+</script> 
+</head> 
+</html> 

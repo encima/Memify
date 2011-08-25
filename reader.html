@@ -1,0 +1,77 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<style>
+body {background-color:#BBB; margin:0;}
+#table {margin-left:auto; margin-right:auto; background-color:#999; padding-left:20px; padding-right:20px;}
+td {width:400px; vertical-align:top;}
+.left {text-align:left; font-size:200%;}
+.right {text-align:right; font-size:200%;}
+.odd {color:#FFF000;}
+.even {color:#000;}
+</style>
+<script>
+
+//sets the text for the left and right side of the screen.
+function setSelection() {
+	var textLeft = document.getElementById('table');
+	var left = getQueryVariable('text1');
+	var splitLeft = left.split(" ");
+	var lText = newLines(splitLeft);
+	textLeft.innerHTML = lText;
+	
+	/*var textRight = document.getElementById('textRight');
+	var right = getQueryVariable('text2');
+    var splitRight = right.split(" ");
+    var rText = newLines(splitRight);
+	textRight.innerHTML = newLines(splitRight);*/
+}
+
+// Searches page URL for the variable and returns
+// the associated value
+function getQueryVariable(variable) {
+  var query = window.location.search.substring(1);
+  query = query.replace(/_/g, " ");
+  var vars = query.split("&");
+  for (var i=0;i<vars.length;i++) {
+    var pair = vars[i].split("=");
+    if (pair[0] == variable) {
+      return pair[1];
+    }
+  } 
+  
+  return(variable + ' not found');
+}
+
+// Splits the passed array into a string, with new lines separating
+// each word and assigning the appropriate colour
+function newLines(array) {
+	var builtString = "";
+	for(var i = 0; i<array.length; i+=2) {
+	    var classType;
+		var lineNum = i/2;
+			if(lineNum % 2 == 0) {
+				classType="even";			
+			}else{
+				classType="odd";
+			}
+		array[i] = unescape(array[i]);
+			if(i+1 >= array.length) {
+				builtString += "<tr class='" + classType  + "'><td class='left'>" + array[i] + "</td class='right'></tr>";
+			}else{
+				array[i+1] = unescape(array[i+1]);
+				builtString += "<tr class='" + classType  + "'><td class='left'>" + array[i] + "</td><td class='right'>" + array[i+1] + "</td></tr>";
+			}
+		}
+	return builtString;
+}
+
+</script>
+</head>
+<body onLoad="setSelection(); ">
+<div id="content">
+<table id="table">
+</table>
+</div>
+</body>
+</html>

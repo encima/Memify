@@ -1,0 +1,26 @@
+{
+ "name": "Memify",
+ "version": "0.2",
+ "icons": {"128":"memify.png"},
+ "homepage_url": "http://encima.co.uk",
+ "description": "Enhance Memory and Read Articles!",
+ "background_page": "background.html",
+ "browser_action": {
+   "default_title": "Memify",
+   "default_icon": "memify.png"
+ },
+ "permissions": [
+   "tabs",
+   "chrome://favicon/",
+   "http://*/*", 
+   "https://*/*"
+ ],
+ "content_scripts": [
+  {
+    "matches": ["http://*/*"],
+    "js": ["selection.js"],
+    "run_at": "document_start",
+    "all_frames": true
+  }
+ ]
+}
